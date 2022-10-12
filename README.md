@@ -25,7 +25,7 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 
 ### How to Play
 '''
-> deck = StandardDeck()
+  > deck = StandardDeck()
 > rain = Player()
 > deck.shuffle()
 Deck Shuffled
