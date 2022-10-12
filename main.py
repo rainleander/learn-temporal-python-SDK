@@ -43,6 +43,13 @@ class StandardDeck(object):
 
   def __repr__(self):
     return "Standard deck of cards:{0} cards remaining".format(len(self.cards))
+  
+  def shuffle(self, times=1):
+    random.shuffle(self.cards)
+    print("Deck Shuffled")
+  
+  def deal(self):
+    return self.cards.pop(0)
 
 class Player(object):
   def __init__(self):
