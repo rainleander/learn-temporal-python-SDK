@@ -53,4 +53,11 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
   > rain.cards[4].showing="True"
   > rain.cards
   [King of Hearts, Queen of Hearts, King of Clubs, Jack of Hearts, Ace of Hearts]
+  > score = PokerScorer(rain.cards)
+  > score.straight()
+  False
+  > score.flush()
+  False
+  > score.highCard()
+  Ace of Hearts
 ~~~
