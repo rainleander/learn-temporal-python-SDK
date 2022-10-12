@@ -29,7 +29,6 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 > rain = Player()
 > deck.shuffle()
 Deck Shuffled
-# Deal Five Cards
 > rain.cards.append(deck.deal())
 > rain.cards.append(deck.deal())
 > rain.cards.append(deck.deal())
@@ -37,7 +36,6 @@ Deck Shuffled
 > rain.cards.append(deck.deal())
 > rain.cards
 [Card, Card, Card, Card, Card]
-# Default doesn't show cards; reveal cards via 
 > rain.cards[0].showing="True"
 > rain.cards
 [King of Hearts, Card, Card, Card, Card]
@@ -47,7 +45,6 @@ Deck Shuffled
 > rain.cards[4].showing="True"
 > rain.cards
 [King of Hearts, Three of Diamonds, King of Clubs, Five of Hearts, Four of Hearts]
-# Exchange cards which are hiddle by default
 > rain.cards[1] = deck.deal()
 > rain.cards[3] = deck.deal()
 > rain.cards[4] = deck.deal()
