@@ -43,7 +43,7 @@ class StandardDeck(object):
 
   def __repr__(self):
     return "Standard deck of cards:{0} cards remaining".format(len(self.cards))
-  
+
   def shuffle(self, times=1):
     random.shuffle(self.cards)
     print("Deck Shuffled")
@@ -57,6 +57,9 @@ class Player(object):
 
   def cardCount(self):
     return len(self.cards)
+
+  def addCard(self, card):
+    self.cards.append(card)
 
 class PokerScorer(object):
   def __init__(self, cards):
@@ -98,3 +101,31 @@ class PokerScorer(object):
       elif highCard.value < card.value:
         highCard = card
     return highCard
+
+def interpreterVideoPoker():
+  player = Player()
+  
+  # initial amount
+  initialAmount = 100
+  # cost per hand
+  handCost = 5
+
+  ## hand loop
+  discard = []
+
+  # shuffle
+  deck = StandardDeck()
+  deck.shuffle()
+  
+  # deal
+  for i in range(5):
+    player.addCard(deck.deal())
+
+  for card in player.cards:
+    card.showing = True
+  
+  # hold or pass
+  # score
+
+  print(player.cards)
+  
