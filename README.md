@@ -24,7 +24,7 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 - tx holdem rules / pre-flop / flop / turn / river
 
 ### How to Play
-'''
+~~~
   > deck = StandardDeck()
   > rain = Player()
   > deck.shuffle()
@@ -52,4 +52,4 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
   > rain.cards[3].showing="True"
   > rain.cards[4].showing="True"
   > rain.cards
-'''
+~~~
