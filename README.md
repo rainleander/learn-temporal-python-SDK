@@ -2,10 +2,10 @@
 Build a poker game that demonstrates the value of Temporal and helps me get to know the PythonSDK
 
 ## Process
-- [ ] build out deck
-- [ ] shuffle
-- [ ] deal
-- [ ] single player game score
+- [x] build out deck
+- [x] shuffle
+- [x] deal
+- [ ] single player game score [in progress]
 - [ ] two player game score
 - [ ] bet function
 - [ ] [foundations](https://docs.temporal.io/application-development/foundations)
