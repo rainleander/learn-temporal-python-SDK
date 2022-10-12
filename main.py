@@ -1,14 +1,15 @@
 import random
 
 class Card(object):
-  def __init__(self, name, value, suit):
+  def __init__(self, name, value, suit, symbol):
     self.value = value
     self.suit = suit
     self.name = name
+    self.symbol = symbol
     self.showing = False
   def __repr__(self):
     if self.showing:
-      return str(self.name) + " of " + self.suit
+      return self.symbol
     else:
       return "Card"
 
@@ -23,7 +24,7 @@ class Deck(object):
 class StandardDeck(object):
   def __init__(self):
     self.cards = []
-    suits = ["Hearts", "Spades", "Diamonds", "Clubs"]
+    suits = {"Hearts":"♡", "Spades":"♠", "Diamonds":"♢", "Clubs":"♣"}
     values = {"Two":2, 
               "Three":3, 
               "Four":4, 
@@ -39,7 +40,12 @@ class StandardDeck(object):
               "Ace":14}
     for name in values:
       for suit in suits:
-        self.cards.append(Card(name, values[name], suit))
+        symbolIcon = suits[suit]
+        if values[name] < 11:
+          symbol = str(values[name])+symbolIcon
+        else:
+          symbol = name[0] + symbolIcon
+        self.cards.append(Card(name, values[name], suit, symbol))
 
   def __repr__(self):
     return "Standard deck of cards:{0} cards remaining".format(len(self.cards))
@@ -102,7 +108,7 @@ class PokerScorer(object):
         highCard = card
     return highCard
 
-def interpreterVideoPoker():
+def Poker():
   player = Player()
   
   # initial amount
