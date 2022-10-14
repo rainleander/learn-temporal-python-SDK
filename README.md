@@ -6,13 +6,13 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 - [x] shuffle
 - [x] deal
 - [x] single player game score 
-- [ ] upgrade: two player game score
-- [ ] upgrade: bet function
 - [ ] [foundations](https://docs.temporal.io/application-development/foundations) [in progress]
 - [ ] [features](https://docs.temporal.io/application-development/features)
 - [ ] [observability](https://docs.temporal.io/application-development/observability)
 - [ ] [testing](https://docs.temporal.io/application-development/testing)
 - [ ] [worker performance](https://docs.temporal.io/application-development/worker-performance)
+- [ ] upgrade: two player game score
+- [ ] upgrade: bet function
 
 ### Classes to Define
 - card / value / suit
