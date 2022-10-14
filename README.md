@@ -5,10 +5,10 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 - [x] build out deck
 - [x] shuffle
 - [x] deal
-- [ ] single player game score [in progress]
-- [ ] two player game score
-- [ ] bet function
-- [ ] [foundations](https://docs.temporal.io/application-development/foundations)
+- [x] single player game score 
+- [ ] upgrade: two player game score
+- [ ] upgrade: bet function
+- [ ] [foundations](https://docs.temporal.io/application-development/foundations) [in progress]
 - [ ] [features](https://docs.temporal.io/application-development/features)
 - [ ] [observability](https://docs.temporal.io/application-development/observability)
 - [ ] [testing](https://docs.temporal.io/application-development/testing)
