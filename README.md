@@ -27,6 +27,31 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 ### How to Play
 ~~~
 > Poker()
+You have 100 points
+
 Deck Shuffled
-[Q♠, Q♣, Q♡, 10♡, 8♡]
+[10♠, J♡, 4♡, A♣, K♢]
+Which cards do you want to discard? ( ie. 1, 2, 3 )
+*Just hit return to hold all, type exit to quit
+3
+[10♠, J♡, 3♣, A♣, K♢]
+
+You have 95 points
+
+Deck Shuffled
+[A♡, 8♣, Q♣, 5♡, 3♣]
+Which cards do you want to discard? ( ie. 1, 2, 3 )
+*Just hit return to hold all, type exit to quit
+2, 3, 4, 5
+[A♡, A♢, 10♡, 10♠, J♠]
+Two Pairs!
++10
+
+You have 100 points
+
+Deck Shuffled
+[3♠, 10♢, 6♡, 4♠, 8♡]
+Which cards do you want to discard? ( ie. 1, 2, 3 )
+*Just hit return to hold all, type exit to quit
+exit
 ~~~
