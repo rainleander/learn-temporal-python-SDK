@@ -148,7 +148,7 @@ class PokerScorer(object):
 def Poker():
   player = Player()
 
-  # Intial Amount
+  # Initial Score
   points = 100
 
   # Cost per hand
