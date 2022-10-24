@@ -275,3 +275,5 @@ def Poker(ctx workflow.Context):
     print()
     print()
     print()
+
+Poker()
