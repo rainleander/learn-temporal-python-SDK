@@ -1,6 +1,15 @@
-import random
+# import random
+# TODO: replace random with pythonsdk random
 
-class Card( object ):
+import asyncio
+from dataclasses import dataclass
+
+from temporalio import workflow
+from temporalio.client import Client
+from temporalio.worker import Worker
+
+@dataclass
+class Card(object):
   def __init__(self, name, value, suit, symbol):
     self.value = value
     self.suit = suit
@@ -47,7 +56,7 @@ class StandardDeck(Deck):
           symbol = str(values[name])+symbolIcon
         else:
           symbol = name[0]+symbolIcon
-        self.cards.append( Card(name, values[name], suit, symbol) )
+        self.cards.append(Card(name, values[name], suit, symbol))
 
   def __repr__(self):
     return "Standard deck of cards:{0} remaining".format(len(self.cards))
@@ -62,13 +71,11 @@ class Player(object):
   def addCard(self, card):
     self.cards.append(card)
 
-
 class PokerScorer(object):
   def __init__(self, cards):
     # Number of cards
     if not len(cards) == 5:
       return "Error: Wrong number of cards"
-
     self.cards = cards
 
   def flush(self):
@@ -81,7 +88,7 @@ class PokerScorer(object):
     values = [card.value for card in self.cards]
     values.sort()
 
-    if not len( set(values)) == 5:
+    if not len(set(values)) == 5:
       return False 
 
     if values[4] == 14 and values[0] == 2 and values[1] == 3 and values[2] == 4 and values[3] == 5:
@@ -145,10 +152,10 @@ class PokerScorer(object):
 
     return False
 
-def Poker():
+def Poker(ctx workflow.Context):
   player = Player()
 
-  # Initial Score
+  # Initial Amount
   points = 100
 
   # Cost per hand
@@ -210,13 +217,13 @@ def Poker():
     pairs = score.pairs()
 
     # Royal flush
-    if straight and flush and straight == 14:
+    if straight and flush == 14:
       print("Royal Flush!!!")
       print("+2000")
       points += 2000
 
     # Straight flush
-    elif straight and flush:
+    elif straight and flush != 14:
       print("Straight Flush!")
       print("+250")
       points += 250
