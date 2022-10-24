@@ -23,7 +23,7 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 
 ### How to Play
 ~~~
-> Poker()
+> python3 main.py
 You have 100 points
 
 Deck Shuffled
