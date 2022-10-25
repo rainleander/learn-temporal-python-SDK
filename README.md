@@ -8,7 +8,7 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 - [x] score
 - [x] single player game 
 - [ ] [workflow](https://docs.temporal.io/application-development/foundations) [in progress]
-- [ ] [activities](https://docs.temporal.io/application-development/features)
+- [ ] [activities](https://docs.temporal.io/application-development/features) [in progress]
 - [ ] upgrade: two player game score
 - [ ] upgrade: bet function
 
