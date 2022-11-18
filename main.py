@@ -1,282 +1,304 @@
 import random
-
 import asyncio
 import logging
-from dataclasses import dataclass
 
 from temporalio import activity, workflow
 from temporalio.client import Client
 from temporalio.worker import Worker
 
-@dataclass
+# workflow
 class Card(object):
-  def __init__(self, name, value, suit, symbol):
-    self.value = value
-    self.suit = suit
-    self.name = name
-    self.symbol = symbol
+    def __init__(self, name, value, suit, symbol):
+        self.value = value
+        self.suit = suit
+        self.name = name
+        self.symbol = symbol
+        self.showing = False
 
-@activity.defn
-async def DeckWorkflow(object) -> object:
-  def shuffle(self, times=1):
-    activity.logger.info("Running activity with parameter %s" % object)
-    random.shuffle(self.cards)
-    print("Deck Shuffled")
-
-  def deal(self):
-    return self.cards.pop(0)
-
-class StandardDeck():
-  def __init__(self):
-    self.cards = []
-    suits = {"Hearts":"♡", "Spades":"♠", "Diamonds":"♢", "Clubs":"♣"}
-    values = {"Two":2,
-              "Three":3,
-              "Four":4,
-              "Five":5,
-              "Six":6,
-              "Seven":7,
-              "Eight":8,
-              "Nine":9,
-              "Ten":10,
-              "Jack":11,
-              "Queen":12,
-              "King":13,
-              "Ace":14 }
-
-    for name in values:
-      for suit in suits:
-        symbolIcon = suits[suit]
-        if values[name] < 11:
-          symbol = str(values[name])+symbolIcon
+    def __repr__(self):
+        if self.showing:
+            return self.symbol
         else:
-          symbol = name[0]+symbolIcon
-        self.cards.append( Card(name, values[name], suit, symbol) )
+            return "Card"
 
-  def __repr__(self):
-    return "Standard deck of cards:{0} remaining".format(len(self.cards))
+# activity because of random.shuffle which makes this section nondeterministic
+class Deck(object):
+    def shuffle(self, times=1):
+        random.shuffle(self.cards)
+        print("Deck Shuffled")
 
+    def deal(self):
+        return self.cards.pop(0)
+
+# workflow
+class StandardDeck(Deck):
+    def __init__(self):
+        self.cards = []
+        suits = {"Hearts": "♡", "Spades": "♠", "Diamonds": "♢", "Clubs": "♣"}
+        values = {"Two": 2,
+                  "Three": 3,
+                  "Four": 4,
+                  "Five": 5,
+                  "Six": 6,
+                  "Seven": 7,
+                  "Eight": 8,
+                  "Nine": 9,
+                  "Ten": 10,
+                  "Jack": 11,
+                  "Queen": 12,
+                  "King": 13,
+                  "Ace": 14}
+
+        for name in values:
+            for suit in suits:
+                symbolIcon = suits[suit]
+                if values[name] < 11:
+                    symbol = str(values[name]) + symbolIcon
+                else:
+                    symbol = name[0] + symbolIcon
+                self.cards.append(Card(name, values[name], suit, symbol))
+
+    def __repr__(self):
+        return "Standard deck of cards:{0} remaining".format(len(self.cards))
+
+# workflow
 class Player(object):
-  def __init__(self):
-    self.cards = []
+    def __init__(self):
+        self.cards = []
 
-  def cardCount(self):
-    return len(self.cards)
+    def cardCount(self):
+        return len(self.cards)
 
-  def addCard(self, card):
-    self.cards.append(card)
+    def addCard(self, card):
+        self.cards.append(card)
 
-
+# workflow
 class PokerScorer(object):
-  def __init__(self, cards):
-    # Number of cards
-    if not len(cards) == 5:
-      return "Error: Wrong number of cards"
+    def __init__(self, cards):
+        # Number of cards
+        if not len(cards) == 5:
+            return "Error: Wrong number of cards"
 
-    self.cards = cards
+        self.cards = cards
 
-  def flush(self):
-    suits = [card.suit for card in self.cards]
-    if len( set(suits) ) == 1:
-      return True
-    return False
+    def flush(self):
+        suits = [card.suit for card in self.cards]
+        if len(set(suits)) == 1:
+            return True
+        return False
 
-  def straight(self):
-    values = [card.value for card in self.cards]
-    values.sort()
+    def straight(self):
+        values = [card.value for card in self.cards]
+        values.sort()
 
-    if not len( set(values)) == 5:
-      return False 
+        if not len(set(values)) == 5:
+            return False
 
-    if values[4] == 14 and values[0] == 2 and values[1] == 3 and values[2] == 4 and values[3] == 5:
-      return 5
+        if values[4] == 14 and values[0] == 2 and values[1] == 3 and values[2] == 4 and values[3] == 5:
+            return 5
 
-    else:
-      if not values[0] + 1 == values[1]: return False 
-      if not values[1] + 1 == values[2]: return False
-      if not values[2] + 1 == values[3]: return False
-      if not values[3] + 1 == values[4]: return False
+        else:
+            if not values[0] + 1 == values[1]: return False
+            if not values[1] + 1 == values[2]: return False
+            if not values[2] + 1 == values[3]: return False
+            if not values[3] + 1 == values[4]: return False
 
-    return values[4]
+        return values[4]
 
-  def highCard(self):
-    values = [card.value for card in self.cards]
-    highCard = None
-    for card in self.cards:
-      if highCard is None:
-        highCard = card
-      elif highCard.value < card.value: 
-        highCard=card
+    def highCard(self):
+        values = [card.value for card in self.cards]
+        highCard = None
+        for card in self.cards:
+            if highCard is None:
+                highCard = card
+            elif highCard.value < card.value:
+                highCard = card
 
-    return highCard
+        return highCard
 
-  def highestCount(self):
-    count = 0
-    values = [card.value for card in self.cards]
-    for value in values:
-      if values.count(value) > count:
-        count = values.count(value)
+    def highestCount(self):
+        count = 0
+        values = [card.value for card in self.cards]
+        for value in values:
+            if values.count(value) > count:
+                count = values.count(value)
 
-    return count
+        return count
 
-  def pairs(self):
-    pairs = []
-    values = [card.value for card in self.cards]
-    for value in values:
-      if values.count(value) == 2 and value not in pairs:
-        pairs.append(value)
+    def pairs(self):
+        pairs = []
+        values = [card.value for card in self.cards]
+        for value in values:
+            if values.count(value) == 2 and value not in pairs:
+                pairs.append(value)
 
-    return pairs
-        
-  def fourKind(self):
-    values = [card.value for card in self.cards]
-    for value in values:
-      if values.count(value) == 4:
-        return True
+        return pairs
 
-  def fullHouse(self):
-    two = False
-    three = False
-    
-    values = [card.value for card in self.cards]
-    if values.count(values) == 2:
-      two = True
-    elif values.count(values) == 3:
-      three = True
+    def fourKind(self):
+        values = [card.value for card in self.cards]
+        for value in values:
+            if values.count(value) == 4:
+                return True
 
-    if two and three:
-      return True
+    def fullHouse(self):
+        two = False
+        three = False
 
-    return False
+        values = [card.value for card in self.cards]
+        if values.count(values) == 2:
+            two = True
+        elif values.count(values) == 3:
+            three = True
+
+        if two and three:
+            return True
+
+        return False
 
 @workflow.defn
-class Poker():
-  # start client
-  client = await Client.connect("localhost:7233")
-  
-  # run a worker for the workflow
-  async with Worker(
-    client,
-    task_queue="deck-task-queue",
-    workflows=[DeckWorkflow],
-  ):
+class PokerWorkflow:
+    @workflow.run
+    async def Poker():
+        player = Player()
 
-    player = Player()
+        # Initial Amount
+        points = 100
 
-    # Intial Amount
-    points = 100
+        end = False
+        while not end:
+            print("You have {0} points".format(points))
+            print()
 
-    # Cost per hand
-    handCost = 5
+            points -= 5
 
-    end = False
-    while not end:
-      print( "You have {0} points".format(points) )
-      print()
+            # Hand Loop
+            deck = StandardDeck()
+            deck.shuffle()
 
-      points-=5
+            # Deal Out
+            for i in range(5):
+                player.addCard(deck.deal())
 
-      # Hand Loop
-      deck = StandardDeck()
-      deck.shuffle()
+            # Make them visible
+            for card in player.cards:
+                card.showing = True
+            print(player.cards)
 
-      # Deal Out
-      for i in range(5):
-        player.addCard(deck.deal())
+            validInput = False
+            while not validInput:
+                print("Which cards do you want to discard? ( ie. 1, 2, 3 )")
+                print("*Just hit return to hold all, type exit to quit")
+                inputStr = input()
 
-      validInput = False
-      while not validInput:
-        print("Which cards do you want to discard? ( ie. 1, 2, 3 )")
-        print("*Just hit return to hold all, type exit to quit")
-        inputStr = input()
+                if inputStr == "exit":
+                    end = True
+                    break
 
-        if inputStr == "exit":
-          end=True
-          break
+                try:
+                    inputList = [int(inp.strip()) for inp in inputStr.split(",") if inp]
 
-        try:
-          inputList = [int(inp.strip()) for inp in inputStr.split(",") if inp]
+                    for inp in inputList:
+                        if inp > 6:
+                            continue
+                        if inp < 1:
+                            continue
 
-          for inp in inputList:
-            if inp > 6:
-              continue 
-            if inp < 1:
-              continue 
+                    for inp in inputList:
+                        player.cards[inp - 1] = deck.deal()
+                        player.cards[inp - 1].showing = True
 
-          for inp in inputList:
-            player.cards[inp-1] = deck.deal()
-            player.cards[inp-1].showing = True
- 
-          validInput = True
-        except:
-          print("Input Error: use commas to separated the cards you want to hold")
+                    validInput = True
+                except:
+                    print("Input Error: use commas to separated the cards you want to hold")
 
-      print(player.cards)
-      # Score
-      score = PokerScorer(player.cards)
-      straight = score.straight()
-      flush = score.flush()
-      highestCount = score.highestCount()
-      pairs = score.pairs()
-  
-      # Royal flush
-      if straight and flush == 14:
-        print("Royal Flush!!!")
-        print("+2000")
-        points += 2000
+            print(player.cards)
+            # Score
+            score = PokerScorer(player.cards)
+            straight = score.straight()
+            flush = score.flush()
+            highestCount = score.highestCount()
+            pairs = score.pairs()
 
-      # Straight flush
-      elif straight and flush != 14:
-        print("Straight Flush!")
-        print("+250")
-        points += 250
+            # Royal flush
+            if straight and flush and straight == 14:
+                print("Royal Flush!!!")
+                print("+2000")
+                points += 2000
 
-      # 4 of a kind
-      elif score.fourKind():
-        print("Four of a kind!")
-        print("+125")
-        points += 125
+            # Straight flush
+            elif straight and flush:
+                print("Straight Flush!")
+                print("+250")
+                points += 250
 
-      # Full House
-      elif score.fullHouse():
-        print("Full House!")
-        print("+40")
-        points += 40
+            # 4 of a kind
+            elif score.fourKind():
+                print("Four of a kind!")
+                print("+125")
+                points += 125
 
-      # Flush
-      elif flush:
-        print("Flush!")
-        print("+25")
-        points += 25
- 
-      # Straight
-      elif straight:
-        print("Straight!")
-        print("+20")
-        points += 20
+            # Full House
+            elif score.fullHouse():
+                print("Full House!")
+                print("+40")
+                points += 40
 
-      # 3 of a kind
-      elif highestCount == 3:
-        print("Three of a Kind!")
-        print("+15")
-        points += 15
- 
-      # 2 pair
-      elif len(pairs) == 2:
-        print("Two Pairs!")
-        print("+10")
-        points += 10
+            # Flush
+            elif flush:
+                print("Flush!")
+                print("+25")
+                points += 25
 
-      # Jacks or better
-      elif pairs and pairs[0] > 10:
-        print ("Jacks or Better!")
-        print("+5")
-        points += 5
- 
-      player.cards=[]
+            # Straight
+            elif straight:
+                print("Straight!")
+                print("+20")
+                points += 20
 
-      print()
-      print()
-      print()
+            # 3 of a kind
+            elif highestCount == 3:
+                print("Three of a Kind!")
+                print("+15")
+                points += 15
 
-Poker()
+            # 2 pair
+            elif len(pairs) == 2:
+                print("Two Pairs!")
+                print("+10")
+                points += 10
+
+            # Jacks or better
+            elif pairs and pairs[0] > 10:
+                print("Jacks or Better!")
+                print("+5")
+                points += 5
+
+            player.cards = []
+
+            print()
+            print()
+            print()
+
+async def main():
+    logging.basicConfig(level=logging.DEBUG)
+
+    client = await Client.connect("localhost:7233")
+
+    async with Worker(
+        client,
+        task_queue="poker-task-queue",
+        workflows=[PokerWorkflow],
+#       activities=[shuffle_deck],
+    ):
+
+        result = await client.execute_workflow(
+            PokerWorkflow.run,
+            input("Do you want to play some poker?"),
+            id="poker-workflow-id",
+            task_queue="poker-task-queue",
+        )
+
+        print(f"Result: {result}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
