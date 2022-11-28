@@ -153,11 +153,10 @@ class PokerScorer(object):
         return False
 
 @activity.defn
-async def poker_game() -> str:
-    activity.logger.error("Running activity")
+async def poker_game() -> None:
+    # activity.logger.critical("Running activity")
     player = Player()
 
-    # Initial Amount
     points = 100
 
     end = False
@@ -278,15 +277,15 @@ async def poker_game() -> str:
 @workflow.defn
 class PokerWorkflow:
     @workflow.run
-    async def run(self) -> str:
-        workflow.logger.error("Running workflow")
+    async def run(self) -> None:
+        # workflow.logger.critical("Running workflow")
         return await workflow.execute_activity(
             poker_game,
             start_to_close_timeout=timedelta(seconds=10),
         )
 
 async def main():
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.CRITICAL)
 
     client = await Client.connect("localhost:7233")
 
