@@ -15,10 +15,7 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 - [ ] upgrade: two player game score
 - [ ] upgrade: bet function
 
-### Classes to Define
-- card / value / suit
-- deck / shuffle / deal
-- score / flush / straight / high card
+### Feature Requests Roadmap
 - player / bot / person
 - bet / money transfer / winning / cashing out
 - leaderboard
