@@ -206,73 +206,73 @@ async def poker_game() -> None:
             except:
                 print("Input Error: use commas to separated the cards you want to hold")
 
-        print(player.cards)
-        # Score
-        score = PokerScorer(player.cards)
-        straight = score.straight()
-        flush = score.flush()
-        highestCount = score.highestCount()
-        pairs = score.pairs()
+            print(player.cards)
+            # Score
+            score = PokerScorer(player.cards)
+            straight = score.straight()
+            flush = score.flush()
+            highestCount = score.highestCount()
+            pairs = score.pairs()
 
-        # Royal flush
-        if straight and flush and straight == 14:
-            print("Royal Flush!!!")
-            print("+2000")
-            points += 2000
+            # Royal flush
+            if straight and flush and straight == 14:
+                print("Royal Flush!!!")
+                print("+2000")
+                points += 2000
 
-        # Straight flush
-        elif straight and flush:
-            print("Straight Flush!")
-            print("+250")
-            points += 250
+            # Straight flush
+            elif straight and flush:
+                print("Straight Flush!")
+                print("+250")
+                points += 250
 
-        # 4 of a kind
-        elif score.fourKind():
-            print("Four of a kind!")
-            print("+125")
-            points += 125
+            # 4 of a kind
+            elif score.fourKind():
+                print("Four of a kind!")
+                print("+125")
+                points += 125
 
-        # Full House
-        elif score.fullHouse():
-            print("Full House!")
-            print("+40")
-            points += 40
+            # Full House
+            elif score.fullHouse():
+                print("Full House!")
+                print("+40")
+                points += 40
 
-        # Flush
-        elif flush:
-            print("Flush!")
-            print("+25")
-            points += 25
+            # Flush
+            elif flush:
+                print("Flush!")
+                print("+25")
+                points += 25
 
-        # Straight
-        elif straight:
-            print("Straight!")
-            print("+20")
-            points += 20
+            # Straight
+            elif straight:
+                print("Straight!")
+                print("+20")
+                points += 20
 
-        # 3 of a kind
-        elif highestCount == 3:
-            print("Three of a Kind!")
-            print("+15")
-            points += 15
+            # 3 of a kind
+            elif highestCount == 3:
+                print("Three of a Kind!")
+                print("+15")
+                points += 15
 
-        # 2 pair
-        elif len(pairs) == 2:
-            print("Two Pairs!")
-            print("+10")
-            points += 10
+            # 2 pair
+            elif len(pairs) == 2:
+                print("Two Pairs!")
+                print("+10")
+                points += 10
 
-        # Jacks or better
-        elif pairs and pairs[0] > 10:
-            print("Jacks or Better!")
-            print("+5")
-            points += 5
+            # Jacks or better
+            elif pairs and pairs[0] > 10:
+                print("Jacks or Better!")
+                print("+5")
+                points += 5
 
-        player.cards = []
+            player.cards = []
 
-        print()
-        print()
-        print()
+            print()
+            print()
+            print()
 
 @workflow.defn
 class PokerWorkflow:
