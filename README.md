@@ -16,7 +16,7 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 - [ ] upgrade: bet function
 
 ### Feature Requests Roadmap
-- player / bot / person
+- multiplayer
 - bet / money transfer / winning / cashing out
 - leaderboard
 - tx holdem rules / pre-flop / flop / turn / river
