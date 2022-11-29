@@ -285,7 +285,7 @@ class PokerWorkflow:
         )
 
 async def main():
-    logging.basicConfig(level=logging.CRITICAL)
+    # logging.basicConfig(level=logging.CRITICAL)
 
     client = await Client.connect("localhost:7233")
 
