@@ -1,6 +1,6 @@
 import random
 import asyncio
-import logging
+# import logging
 from datetime import timedelta
 
 from temporalio import activity, workflow
