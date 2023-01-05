@@ -1,6 +1,8 @@
 # WIP Learn Temporal PythonSDK
 Build a poker game that demonstrates the value of Temporal and helps me get to know the PythonSDK
 
+![](https://github.com/rainleander/learn-temporal-pythonSDK/blob/main/Studio_Project.gif)
+
 ## AppDev Process
 - [x] deck
 - [x] shuffle
