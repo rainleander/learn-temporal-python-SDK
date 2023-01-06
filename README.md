@@ -3,6 +3,8 @@ Build a poker game that demonstrates the value of Temporal and helps me get to k
 
 ![](https://github.com/rainleander/learn-temporal-pythonSDK/blob/main/Studio_Project.gif)
 
+![](https://github.com/rainleander/learn-temporal-pythonSDK/blob/main/Poker_Screen_Caps%20(3).gif)
+
 ## AppDev Process
 - [x] deck
 - [x] shuffle
