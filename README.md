@@ -13,10 +13,11 @@ This project is intended to show my process through learning Temporal and is not
 - [x] single player game 
 - [x] [workflow](https://docs.temporal.io/application-development/foundations) 
 - [x] [activities](https://docs.temporal.io/application-development/features) 
-- [x] write blog post (pending publication)
+- [x] write v1.0 [blog post](https://temporal.io/blog/python-sdk-your-first-application)
 - [ ] [child workflows](https://docs.temporal.io/workflows#child-workflow) [in progress]
 - [ ] [signals](https://docs.temporal.io/concepts/what-is-a-signal/) [in progress]
 - [ ] [queries](https://docs.temporal.io/concepts/what-is-a-query/) [in progress]
+- [ ] write v2.0 blog post
 
 ### Feature Requests Roadmap
 - multiplayer
