@@ -1,5 +1,5 @@
 # WIP Learn Temporal Python SDK
-Build a poker game that demonstrates the value of Temporal and helps me get to know the Python SDK
+This project is intended to show my process through learning Temporal and is not meant to showcase production-level best practices.
 
 ![](https://github.com/rainleander/learn-temporal-pythonSDK/blob/main/Studio_Project.gif)
 
