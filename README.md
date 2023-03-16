@@ -1,5 +1,7 @@
-# WIP Learn Temporal Python SDK
+# WIP Learn Temporal Python SDK v1
 This project is intended to show my process through learning Temporal and is not meant to showcase production-level best practices.
+
+Learn Temporal Python SDK v2 is [over here](https://github.com/rainleander/learn-temporal-python-SDK-v2)
 
 ![](https://github.com/rainleander/learn-temporal-pythonSDK/blob/main/Studio_Project.gif)
 
